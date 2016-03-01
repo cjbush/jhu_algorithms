@@ -46,8 +46,20 @@ public class TestBinaryTree {
     intTree.inorder();
     
     
-    System.out.println("\nHeight: " + intTree.height());
-    System.out.println("Number of leaves: " + intTree.getNumberOfLeaves());
-    System.out.println("Number of nonleaves: "+intTree.getNumberOfNonLeaves());
+    //Test code for added methods
+    assert intTree.getHeight() == 5;
+    assert intTree.getNumberOfLeaves() == 3;
+    assert intTree.getNumberOfNonLeaves() == 5;
+    
+    //Test the lambda based postorder traversal
+    //Requires Java 8
+    System.out.print("\nPostorder with lambda: ");
+    intTree.postorder((node) -> { System.out.print(node.element + " "); });
+    
+    System.out.print("\nInorder with lambda: ");
+    intTree.inorder((node) -> { System.out.print(node.element + " " ); });
+    
+    System.out.print("\nPreorder with lambda: ");
+    intTree.preorder((node) -> { System.out.print(node.element + " "); });
   }
 }

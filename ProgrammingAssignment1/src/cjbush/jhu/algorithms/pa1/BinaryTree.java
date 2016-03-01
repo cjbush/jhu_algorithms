@@ -22,27 +22,157 @@ public class BinaryTree<E extends Comparable<E>> extends AbstractTree<E> impleme
       insert(objects[i]);
   }
   
-  public int height() {
-      return height(root);
+  
+  
+  
+  
+  
+  
+  
+  
+  /* BEGIN MY CODE */
+  
+  /**
+   * Prints the height of the tree. I wasn't sure whether to follow the
+   * signature from the assignment or return an int, so this just calls
+   * getHeight below and prints it to the console. Hopefully that satisfies
+   * both requirements.
+   */
+  public void height(){
+	  System.out.println("Height of the tree is: " + this.getHeight());
   }
   
-  protected int height(TreeNode<E> subroot){     
-      return subroot == null ? -1 : Integer.max(height(subroot.left), height(subroot.right)) + 1;
+  /**
+   * Returns the height of the binary tree as an integer
+   * @return the height from the tree's root node
+   */
+  public int getHeight() {
+      return getHeight(root);
   }
   
+  /**
+   * Recursive function to get the height of a subtree beneath any given node.
+   * If you've reached a leaf, return -1, otherwise return the max between
+   * the height of your left subtree and the height of your right subtree, and
+   * add 1 for yourself.
+   * @param subroot The "root" node of the subtree to check
+   * @return -1 if subroot is a leaf, otherwise the max height between the left subtree
+   * 		 and the right subtree + 1 for the root node's level
+   */
+  protected int getHeight(TreeNode<E> subroot){     
+      return subroot == null ? -1 : Integer.max(getHeight(subroot.left), getHeight(subroot.right)) + 1;
+  }
+  
+  /**
+   * Finds the total number of leaves in the tree by recursively calling
+   * getNumberOfLeaves starting with "root".
+   * 
+   * @return the number of leaf nodes below the overall root
+   */
   public int getNumberOfLeaves(){
       return getNumberOfLeaves(root);
   }
   
+  /**
+   * Recursively finds leaves in the tree below any given node subroot
+   * 
+   * @param subroot The root node of the subtree 
+   * @return 0 if the subroot is null, 1 if the subroot is a leaf,
+   * 		or the sum of leaves on the left subtree and right subtree
+   */
   protected int getNumberOfLeaves(TreeNode<E> subroot){
       if(subroot == null) return 0;
       if(subroot.left == null && subroot.right == null) return 1;
       return getNumberOfLeaves(subroot.left) + getNumberOfLeaves(subroot.right);
   }
   
+  /**
+   * Returns the nonleaves by subtracting the number of leaves from the total
+   * number of nodes.
+   * 
+   * @return The number of non-leaf nodes
+   */
   public int getNumberOfNonLeaves(){
       return getSize() - getNumberOfLeaves();
   }
+  
+  //Note that there's already a postorder implementation in the provided code below.
+  //I just decided to make a slightly more interesting one, because I haven't gotten
+  //to play with Java lambda expressions yet. Ignore this if you want.
+  //(Conclusion: C# still does them better)
+  
+  /**
+   * Defines the "visitor" lambda. i.e. what do we do when we call "visit" on the node
+   * 
+   */
+  @FunctionalInterface
+  public interface NodeVisitLambda<E extends Comparable<E>>{
+	  public void Visit(TreeNode<E> node);
+  }
+  
+  /**
+   * postorder traversal that accepts a lambda expression
+   * @param visitLambda Lambda expression for visiting the node
+   */
+  public void postorder(NodeVisitLambda<E> lambda){
+	  postorder(root, lambda);
+  }
+  
+  public void inorder(NodeVisitLambda<E> lambda){
+	  inorder(root, lambda);
+  }
+  
+  public void preorder(NodeVisitLambda<E> lambda){
+	  preorder(root, lambda);
+  }
+  
+  /**
+   * Recursive postorder call that traverses the left subtree, then the right subtree,
+   * then visits the subroot node using the given lambda
+   * 
+   * @param subroot The root of the subtree 
+   * @param visitLambda The lambda to execute when the node is visited
+   */
+  protected void postorder(TreeNode<E> subroot, NodeVisitLambda<E> lambda){
+	  if(subroot == null) return;
+	  postorder(subroot.left, lambda);
+	  postorder(subroot.right, lambda);
+	  lambda.Visit(subroot);
+  }
+  
+  protected void inorder(TreeNode<E> subroot, NodeVisitLambda<E> lambda){
+	  if(subroot == null) return;
+	  inorder(subroot.left, lambda);
+	  lambda.Visit(subroot);
+	  inorder(subroot.right, lambda);
+  }
+  
+  protected void preorder(TreeNode<E> subroot, NodeVisitLambda<E> lambda){
+	  if(subroot == null) return;
+	  lambda.Visit(subroot);
+	  preorder(subroot.left, lambda);
+	  preorder(subroot.right, lambda);
+  }
+  
+  /* END MY CODE */
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   /** Returns true if the element is in the tree */
   public boolean search(E e) {
