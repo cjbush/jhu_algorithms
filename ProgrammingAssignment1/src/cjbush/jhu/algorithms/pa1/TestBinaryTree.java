@@ -46,6 +46,8 @@ public class TestBinaryTree {
     intTree.inorder();
     
     
+    /* BEGIN MY CODE */
+    
     //Test code for added methods
     assert intTree.getHeight() == 5;
     assert intTree.getNumberOfLeaves() == 3;
@@ -61,5 +63,7 @@ public class TestBinaryTree {
     
     System.out.print("\nPreorder with lambda: ");
     intTree.preorder((node) -> { System.out.print(node.element + " "); });
+    
+    /* END MY CODE */
   }
 }
