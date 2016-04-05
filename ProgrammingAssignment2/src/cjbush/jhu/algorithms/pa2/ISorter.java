@@ -9,6 +9,6 @@ package cjbush.jhu.algorithms.pa2;
  *
  * @author bushc
  */
-public interface ISorter<T> {
+public interface ISorter<T extends Comparable<? super T>> {
     T[] sort(T[] A);
 }

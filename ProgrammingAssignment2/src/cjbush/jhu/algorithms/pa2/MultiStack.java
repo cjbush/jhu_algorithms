@@ -5,7 +5,7 @@
  */
 package cjbush.jhu.algorithms.pa2;
 
-import java.util.ArrayList;
+import java.lang.reflect.Array;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,19 +25,25 @@ public class MultiStack<T> {
             Size = 0;
         }
         
-        public void push(T value){
+        public void push(T value){            
             DoublyLinkedListNode<T> node = new DoublyLinkedListNode<T>();
             node.setValue(value);
-            Top.setPrevious(node);
-            node.setNext(Top);
+            
+            DoublyLinkedListNode<T> tempTop = Top;
+            Top = node;
+            if(tempTop != null){
+                Top.Next = tempTop;
+                tempTop.Previous = Top;
+            }          
             Size++;
         }
         
         public T pop(){
+            if(Top == null) return null;
             T value = Top.getValue();
             DoublyLinkedListNode<T> temp = Top;
             Top = Top.getNext();
-            Top.setPrevious(null);
+            if(Top != null) Top.setPrevious(null);
             temp = null;
             Size--;
             return value;
@@ -61,44 +67,84 @@ public class MultiStack<T> {
     private Stack<T> A;
     private Stack<T> B;
     
-    public MultiStack(){
+    private Class<T> clazz; //Java generic types suck.
+    
+    
+    public MultiStack(Class<T> clazz){
         A = new Stack<T>();
         B = new Stack<T>();
+        
+        this.clazz = clazz;
     }
     
-    public void PushA(T value){
+    public MultiStack<T> PushA(T value){
         A.push(value);
+        return this;
     }
     
-    public void PushB(T value){
+    public MultiStack<T> PushB(T value){
         B.push(value);
+        return this;
     }
     
     public T[] MultiPopA(int k){
         int i = 0;
-        final ArrayList<T> values = new ArrayList<T>();
-        while(i++ < k){
+        T[] retval = (T[])Array.newInstance(clazz, Math.min(k, A.Size));
+        while(i < k){
             if(A.IsEmpty()) break;
-            values.add(A.pop());
+            retval[i++] = A.pop();
         }
-        return (T[])values.toArray();
+        return retval;
     }
     
     public T[] MultiPopB(int k){
         int i = 0;
-        final ArrayList<T> values = new ArrayList<T>();
-        while(i++ < k){
+        T[] retval = (T[])Array.newInstance(clazz, Math.min(k, B.Size));
+        while(i < k){
             if(B.IsEmpty()) break;
-            values.add(B.pop());
+            retval[i++] = B.pop();
         }
-        return (T[])values.toArray();
+        return retval;
     }
     
-    public void Transfer(int k){
+    public MultiStack<T> Transfer(int k){
         int i = 0;
         while(i++ < k){
             if(A.IsEmpty()) break;
             B.push(A.pop());
         }
+        return this;
+    }
+    
+    public int SizeA(){
+        return A.getSize();
+    }
+    
+    public int SizeB(){
+        return B.getSize();
+    }
+    
+    public boolean IsAEmpty(){
+        return A.IsEmpty();
+    }
+    
+    public boolean IsBEmpty(){
+        return B.IsEmpty();
+    }
+    
+    public MultiStack<T> ClearA(){
+        A = new Stack<T>();
+        return this;
+    }
+    
+    public MultiStack<T> ClearB(){
+        B = new Stack<T>();
+        return this;
+    }
+    
+    public MultiStack<T> ClearAll(){
+        ClearA();
+        ClearB();
+        return this;
     }
 }
