@@ -9,5 +9,5 @@ package cjbush.jhu.algorithms.pa3;
  * @author cjbus_000
  */
 public interface IDFS {
-    void DFS(IGraph graph);
+    void DFS(IGraph G);
 }

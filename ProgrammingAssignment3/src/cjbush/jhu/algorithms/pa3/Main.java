@@ -50,7 +50,11 @@ public class Main {
 	dfs = new PartADFS();
 	g = CreateDirectedGraph();
 	dfs.DFS(g);
-	ValidateDirectedGraph(g);
+	//ValidateDirectedGraph(g);
+        
+        dfs = new PartBDFS();
+        g = CreateDirectedGraph();
+        dfs.DFS(g);
     }
     
     private static IGraph CreateUndirectedGraph(){	
