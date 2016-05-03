@@ -26,7 +26,6 @@ public class TextBookDFS implements IDFS {
     }
     
     private void DFS_VISIT(IGraph G, Vertex u){
-	System.out.println("Visiting "+u.getName());
 	u.setD(++time);
 	u.setColor(Vertex.Color.GRAY);
 	for(Vertex v : G.GetAdjacentVertices(u.getName())){

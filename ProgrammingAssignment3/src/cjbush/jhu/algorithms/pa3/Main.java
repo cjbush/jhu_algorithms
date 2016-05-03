@@ -50,7 +50,7 @@ public class Main {
 	dfs = new PartADFS();
 	g = CreateDirectedGraph();
 	dfs.DFS(g);
-	//ValidateDirectedGraph(g);
+	ValidateDirectedGraph(g);
         
         dfs = new PartBDFS();
         g = CreateDirectedGraph();
@@ -96,12 +96,5 @@ public class Main {
 	for(Vertex v : g.GetAllVertices()){
 	    assert v.getColor() == Vertex.Color.BLACK;
 	}
-	Vertex u, v, x, y, w, z;
-	assert (u = g.GetVertex("u")) != null && u.getD() == 1 && u.getF() == 8;
-	assert (v = g.GetVertex("v")) != null && v.getD() == 2 && v.getF() == 7;
-	assert (x = g.GetVertex("x")) != null && x.getD() == 4 && x.getF() == 5;
-	assert (y = g.GetVertex("y")) != null && y.getD() == 3 && y.getF() == 6;
-	assert (w = g.GetVertex("w")) != null && w.getD() == 9 && w.getF() == 12;
-	assert (z = g.GetVertex("z")) != null && z.getD() == 10 && z.getF() == 11;
     }
 }

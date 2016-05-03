@@ -12,7 +12,7 @@ public class PartADFS implements IDFS {
 
     private int time = 0;
     
-    private Stack<Vertex> S = new Stack<Vertex>();
+    private final Stack<Vertex> S = new Stack<>();
     
     @Override
     public void DFS(IGraph G) {
@@ -33,7 +33,6 @@ public class PartADFS implements IDFS {
     }
     
     private void DFS_VISIT(IGraph G, Vertex u){
-	System.out.println("Visiting "+u.getName());
 	u.setD(++time);
 	u.setColor(Vertex.Color.GRAY);
 	for(Vertex v : G.GetAdjacentVertices(u.getName())){
